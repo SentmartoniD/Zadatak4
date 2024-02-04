@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
                 return Ok();
             }
             catch (Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
             }
         }
     }
