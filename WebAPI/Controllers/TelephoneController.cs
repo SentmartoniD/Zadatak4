@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.DTO;
 using WebAPI.Interfaces;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -42,5 +43,19 @@ namespace WebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
             }
         }
+
+        [HttpGet("get-all")]
+        public async Task<ActionResult> GetAll()
+        {
+            try
+            {
+                List<Input> list = await _JSONHandlerService.GetAll();
+                return Ok(new { Results = list });
+            }
+            catch (Exception e) {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
+            }
+        }
+
     }
 }

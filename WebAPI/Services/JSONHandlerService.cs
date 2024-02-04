@@ -17,7 +17,7 @@ namespace WebAPI.Services
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string targetDirectory = Path.GetFullPath(Path.Combine(currentDirectory, @"..\..\..\..\"));
-            string pathToJSONDb = targetDirectory + "JSONDb.json";
+            pathToJSONDb = targetDirectory + "JSONDb.json";
         }
 
         public async Task<bool> DeleteById(int id)
