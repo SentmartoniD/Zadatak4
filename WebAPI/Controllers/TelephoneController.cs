@@ -26,17 +26,20 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> Upload([FromBody] InputDTO input) {
             try
             {
-                bool res = await _validationService.Validate(input);
-                if (res)
+                bool resValidate = await _validationService.Validate(input);
+                if (resValidate)
                 {
-                    bool rez = await _JSONHandlerService.Save(input);
-                    return Ok(new { Message = "Successful upload!" });
+                    bool resSave = await _JSONHandlerService.Save(input);
+                    if (resSave)
+                        return Ok(new { Message = "Successful upload!" });
+                    else
+                        return BadRequest(new {Error = "Entity with the same values already exists!" });
                 }
                 else
-                    return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Error = "Invalid values for the attributes!" }); 
+                    return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Error = "Invalid values for the attributes!"}); 
             }
             catch (Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Internal server error!" });
             }
         }
     }
