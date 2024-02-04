@@ -63,7 +63,10 @@ namespace WebAPI.Controllers
             try
             {
                 Input input = await _JSONHandlerService.GetById(id);
-                return Ok(new { Result = input });
+                if(input != null)
+                    return Ok(new { Result = input });
+                else
+                    return BadRequest(new { Error = $"Entity with the id:{id} does not exists!" });
             }
             catch (Exception e)
             {
