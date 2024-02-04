@@ -20,9 +20,20 @@ namespace WebAPI.Services
             string pathToJSONDb = targetDirectory + "JSONDb.json";
         }
 
-        public Task<bool> DeleteById(int id)
+        public async Task<bool> DeleteById(int id)
         {
-            throw new NotImplementedException();
+            string jsonListString = File.ReadAllText(pathToJSONDb);
+            List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
+            Input input = new Input();
+            for (int i = 0; i < myList.Count; i++)
+            {
+                if (myList[i].Id == id)
+                {
+                    myList.RemoveAt(i);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public async Task<List<Input>> GetAll()
