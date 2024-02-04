@@ -60,7 +60,7 @@ namespace WebAPI.Services
         {
             string jsonListString = File.ReadAllText(pathToJSONDb);
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
-            Input input = new Input();
+            Input input = null;
             for (int i = 0; i < myList.Count; i++) {
                 if (myList[i].Id == id)
                 {
