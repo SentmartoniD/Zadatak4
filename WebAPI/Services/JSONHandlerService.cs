@@ -12,13 +12,34 @@ namespace WebAPI.Services
 {
     public class JSONHandlerService : IJSONHandler
     {
-        public async Task<bool> Save(InputDTO input)
+        private readonly string pathToJSONDb;
+        public JSONHandlerService()
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string targetDirectory = Path.GetFullPath(Path.Combine(currentDirectory, @"..\..\..\..\"));
-            string targetJSONFilePath = targetDirectory + "JSONDb.json";
+            string pathToJSONDb = targetDirectory + "JSONDb.json";
+        }
 
-            string jsonListString = File.ReadAllText(targetJSONFilePath);
+        public Task<bool> DeleteById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Input>> GetAll()
+        {
+            string jsonListString = File.ReadAllText(pathToJSONDb);
+            List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
+            return myList;
+        }
+
+        public Task<Input> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> Save(InputDTO input)
+        {
+            string jsonListString = File.ReadAllText(pathToJSONDb);
             
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
 
@@ -35,7 +56,7 @@ namespace WebAPI.Services
                  WriteIndented = true
              });
 
-            using (StreamWriter streamWriter = new StreamWriter(targetJSONFilePath))
+            using (StreamWriter streamWriter = new StreamWriter(pathToJSONDb))
             {
                 streamWriter.Write(newJSONListString);
             }
