@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.DTO;
+using WebAPI.Interfaces;
 
 namespace WebAPI.Controllers
 {
@@ -12,9 +13,11 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TelephoneController : ControllerBase
     {
-        public TelephoneController()
-        {
+        private readonly IValidation _validationService;
 
+        public TelephoneController(IValidation validationService)
+        {
+            _validationService = validationService;
         }
 
         [HttpPost("upload")]
