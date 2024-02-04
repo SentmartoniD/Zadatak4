@@ -57,5 +57,21 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpGet("get-by-id/{id:int}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            try
+            {
+                Input input = await _JSONHandlerService.GetById(id);
+                return Ok(new { Result = input });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
+            }
+        }
+
+
+
     }
 }
