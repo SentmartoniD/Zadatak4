@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
                     return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Error = "Invalid values for the attributes!"}); 
             }
             catch (Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Internal server error!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
             }
         }
     }

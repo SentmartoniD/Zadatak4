@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 0,
+    "FirstName": "Milos",
+    "LastName": "Milosevic",
+    "Telephone": "066123456"
+  },
+  {
+    "Id": 1,
+    "FirstName": "Milan",
+    "LastName": "Milanovic",
+    "Telephone": "066987654"
+  },
+  {
+    "Id": 2,
+    "FirstName": "Milorad",
+    "LastName": "Miloradovic",
+    "Telephone": "069345162"
+  }
+]
