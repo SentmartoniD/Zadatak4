@@ -71,7 +71,22 @@ namespace WebAPI.Controllers
             }
         }
 
-
+        [HttpDelete("delete-by-id/{id:int}")]
+        public async Task<ActionResult> DeleteById(int id)
+        {
+            try
+            {
+                bool res = await _JSONHandlerService.DeleteById(id);
+                if(res)
+                    return Ok(new { Message = "Successfuly deleted!" });
+                else
+                    return BadRequest(new { Error = $"Entity with the id:{id} does not exists!" });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
+            }
+        }
 
     }
 }

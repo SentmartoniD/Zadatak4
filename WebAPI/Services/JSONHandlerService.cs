@@ -24,16 +24,29 @@ namespace WebAPI.Services
         {
             string jsonListString = File.ReadAllText(pathToJSONDb);
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
-            Input input = new Input();
-            for (int i = 0; i < myList.Count; i++)
+            int listLenght = myList.Count;
+            for (int i = 0; i < listLenght; i++)
             {
                 if (myList[i].Id == id)
                 {
                     myList.RemoveAt(i);
-                    return true;
+                    break;
                 }
             }
-            return false;
+            if (listLenght == myList.Count)
+                return false;
+
+            string newJSONListString = JsonSerializer.Serialize(myList, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+
+            using (StreamWriter streamWriter = new StreamWriter(pathToJSONDb))
+            {
+                streamWriter.Write(newJSONListString);
+            }
+
+            return true;
         }
 
         public async Task<List<Input>> GetAll()
