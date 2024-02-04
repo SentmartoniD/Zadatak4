@@ -14,10 +14,12 @@ namespace WebAPI.Controllers
     public class TelephoneController : ControllerBase
     {
         private readonly IValidation _validationService;
+        private readonly IJSONHandler _JSONHandlerService;
 
-        public TelephoneController(IValidation validationService)
+        public TelephoneController(IValidation validationService, IJSONHandler JSONHandlerService)
         {
             _validationService = validationService;
+            _JSONHandlerService = JSONHandlerService;
         }
 
         [HttpPost("upload")]
@@ -26,12 +28,15 @@ namespace WebAPI.Controllers
             {
                 bool res = await _validationService.Validate(input);
                 if (res)
+                {
+                    bool rez = await _JSONHandlerService.Save(input);
                     return Ok(new { Message = "Successful upload!" });
+                }
                 else
                     return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Error = "Invalid values for the attributes!" }); 
             }
             catch (Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Internal server error!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = e.Message });
             }
         }
     }

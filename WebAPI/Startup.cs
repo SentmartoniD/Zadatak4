@@ -36,6 +36,7 @@ namespace WebAPI
             });
 
             services.AddScoped<IValidation, ValidationService>();
+            services.AddScoped<IJSONHandler, JSONHandlerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
