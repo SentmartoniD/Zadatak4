@@ -12,6 +12,11 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TelephoneController : ControllerBase
     {
+        public TelephoneController()
+        {
+
+        }
+
         [HttpPost("upload")]
         public async Task<ActionResult> Upload([FromBody] InputDTO input) {
             try
