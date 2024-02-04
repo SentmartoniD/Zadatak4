@@ -26,12 +26,12 @@ namespace WebAPI.Controllers
             {
                 bool res = await _validationService.Validate(input);
                 if (res)
-                    return StatusCode(StatusCodes.Status200OK, "Successfull upload!");
+                    return Ok(new { Message = "Successful upload!" });
                 else
-                    return StatusCode(StatusCodes.Status422UnprocessableEntity, "Invalid values for the attributes!");
+                    return StatusCode(StatusCodes.Status422UnprocessableEntity, new { Error = "Invalid values for the attributes!" }); 
             }
             catch (Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Internal server error!" });
             }
         }
     }
