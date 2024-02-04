@@ -24,7 +24,11 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> Upload([FromBody] InputDTO input) {
             try
             {
-                return Ok();
+                bool res = await _validationService.Validate(input);
+                if (res)
+                    return StatusCode(StatusCodes.Status200OK, "Successfull upload!");
+                else
+                    return StatusCode(StatusCodes.Status422UnprocessableEntity, "Invalid values for the attributes!");
             }
             catch (Exception e) {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
