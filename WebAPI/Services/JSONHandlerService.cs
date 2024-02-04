@@ -32,9 +32,19 @@ namespace WebAPI.Services
             return myList;
         }
 
-        public Task<Input> GetById(int id)
+        public async Task<Input> GetById(int id)
         {
-            throw new NotImplementedException();
+            string jsonListString = File.ReadAllText(pathToJSONDb);
+            List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
+            Input input = new Input();
+            for (int i = 0; i < myList.Count; i++) {
+                if (myList[i].Id == id)
+                {
+                    input = myList[i];
+                    break;
+                }
+            }
+            return input;
         }
 
         public async Task<bool> Save(InputDTO input)
