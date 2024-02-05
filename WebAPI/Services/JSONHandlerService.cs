@@ -15,6 +15,7 @@ namespace WebAPI.Services
         private readonly string pathToJSONDb;
         public JSONHandlerService()
         {
+            // GET THE PATH TO THE JSONDb FILE
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string targetDirectory = Path.GetFullPath(Path.Combine(currentDirectory, @"..\..\..\..\"));
             pathToJSONDb = targetDirectory + "JSONDb.json";
@@ -27,20 +28,24 @@ namespace WebAPI.Services
             int listLenght = myList.Count;
             for (int i = 0; i < listLenght; i++)
             {
+                // IF ID IS IN THE LIST THEN REMOVE IT FROM THE LIST
                 if (myList[i].Id == id)
                 {
                     myList.RemoveAt(i);
                     break;
                 }
             }
+            // IF THE LIST LENGHT DIDNT CHANGE, THEN ID ISNT IN THE LIST
             if (listLenght == myList.Count)
                 return false;
 
+            // SERIALIZE THE LIST INTO A JSON STRING
             string newJSONListString = JsonSerializer.Serialize(myList, new JsonSerializerOptions
             {
                 WriteIndented = true
             });
 
+            // WRITE THE JSON TO THE JSONDb FILE
             using (StreamWriter streamWriter = new StreamWriter(pathToJSONDb))
             {
                 streamWriter.Write(newJSONListString);
@@ -51,7 +56,9 @@ namespace WebAPI.Services
 
         public async Task<List<Input>> GetAll()
         {
+            // GET THE JSON OBJECTS AS A STRING
             string jsonListString = File.ReadAllText(pathToJSONDb);
+            // DESERIALIZE THE STRING INTO A LIST
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
             return myList;
         }
@@ -62,6 +69,7 @@ namespace WebAPI.Services
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
             Input input = null;
             for (int i = 0; i < myList.Count; i++) {
+                // CHECK IF THE ID IS IN THE LIST
                 if (myList[i].Id == id)
                 {
                     input = myList[i];
@@ -78,6 +86,7 @@ namespace WebAPI.Services
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
 
             for (int i = 0; i < myList.Count; i++) {
+                // CHECK IF ITS A DUPLICATE
                 if (myList[i].FirstName == input.FirstName && myList[i].LastName == input.LastName && myList[i].Telephone == input.Telephone)
                     return false;
             }
@@ -85,11 +94,13 @@ namespace WebAPI.Services
             myList.Add(new Input { 
                 Id = myList.Count, FirstName = input.FirstName, LastName = input.LastName, Telephone = input.Telephone});
 
-             string newJSONListString  = JsonSerializer.Serialize(myList, new JsonSerializerOptions
-             {
+            // SERIALIZE THE LIST INTO A JSON STRING
+            string newJSONListString  = JsonSerializer.Serialize(myList, new JsonSerializerOptions
+            {
                  WriteIndented = true
-             });
+            });
 
+            // WRITE TO THE JSONDb FILE
             using (StreamWriter streamWriter = new StreamWriter(pathToJSONDb))
             {
                 streamWriter.Write(newJSONListString);
