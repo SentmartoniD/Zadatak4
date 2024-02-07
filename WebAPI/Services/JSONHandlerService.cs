@@ -81,7 +81,9 @@ namespace WebAPI.Services
 
         public async Task<bool> Save(InputDTO input)
         {
-            string jsonListString = File.ReadAllText(pathToJSONDb);
+            string jsonListString = "";
+            if (File.Exists(pathToJSONDb))
+                jsonListString = File.ReadAllText(pathToJSONDb);
             
             List<Input> myList = String.IsNullOrEmpty(jsonListString) ? new List<Input>() : JsonSerializer.Deserialize<List<Input>>(jsonListString);
 

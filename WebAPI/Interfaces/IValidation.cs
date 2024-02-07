@@ -8,6 +8,7 @@ namespace WebAPI.Interfaces
 {
     public interface IValidation
     {
+        // CHECH IF THE VALUES OF INPUT ARE VALID
         Task<bool> Validate(InputDTO input);
     }
 }
