@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("get-all")]
+        [HttpGet("list-all")]
         public async Task<ActionResult> GetAll()
         {
             try
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet("get-by-id/{id:int}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult> GetById(int id)
         {
             try
@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpDelete("delete-by-id/{id:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteById(int id)
         {
             try

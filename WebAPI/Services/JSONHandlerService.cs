@@ -15,7 +15,7 @@ namespace WebAPI.Services
         private readonly string pathToJSONDb;
         public JSONHandlerService()
         {
-            // GET THE PATH TO THE JSONDb FILE
+            // GET THE PATH TO THE JSONDb FILE IN SOLUTION FOLDER
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string targetDirectory = Path.GetFullPath(Path.Combine(currentDirectory, @"..\..\..\..\"));
             pathToJSONDb = targetDirectory + "JSONDb.json";
