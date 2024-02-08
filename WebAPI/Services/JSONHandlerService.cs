@@ -93,8 +93,12 @@ namespace WebAPI.Services
                     return false;
             }
 
+            // GET RANDOM INTEGER FOR ID
+            Random rand = new Random();
+            int randomNumber = rand.Next(0, 100000);
+
             myList.Add(new Input { 
-                Id = myList.Count, FirstName = input.FirstName, LastName = input.LastName, Telephone = input.Telephone});
+                Id = randomNumber, FirstName = input.FirstName, LastName = input.LastName, Telephone = input.Telephone});
 
             // SERIALIZE THE LIST INTO A JSON STRING
             string newJSONListString  = JsonSerializer.Serialize(myList, new JsonSerializerOptions
